@@ -1,10 +1,6 @@
 import praw
 
-reddit = praw.Reddit(client_id='10f6M8u6wLvIiw',
-                     client_secret='vv7nmiB8qdIneB5CzoILNan7-TM',
-                     user_agent='Mac OS:WordBotv0.1 (by /u/J_Dymond)',
-                     username='word_bot',
-                     password='nibba123!')
+reddit = praw.Reddit('word_bot', user_agent='Mac OS:WordBotv0.1 (by /u/J_Dymond)')
 
 subreddit = reddit.subreddit('SaintsFC')
 
