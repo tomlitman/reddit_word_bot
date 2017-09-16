@@ -26,16 +26,20 @@ for top_level_comment in submission.comments:
     body = top_level_comment.body
     print(body)
     if 'Awry' in body:
-    	
     	language = 'en'
     	word_id = 'Awry'
     	url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower()
     	r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    	
+    	#print("text \n" + r.text)
+    	WordInfo = json.loads(r.text)['results']
+    	
+    	WordDefinitions = WordInfo[0]['lexicalEntries'][0]['entries'][0]['senses']
+    	
+    	def1 = WordDefinitions[0]['definitions'][0]
+    	def2 = WordDefinitions[0]['subsenses'][0]['definitions'][0]
+    	
+    	reply = ('Awry: \n\n1) ' + def1 + '\n\n2)' + def2)
+    	top_level_comment.reply(reply)
+    	
     	break
-
-
-print("text \n" + r.text)
-
-WordInfo = json.loads(r.text)['results']
-
-print(WordInfo)
