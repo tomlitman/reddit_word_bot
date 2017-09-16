@@ -1,15 +1,13 @@
 from bs4 import BeautifulSoup
-from a import html_doc
 import urllib.request
 
-# http://islandnet.com/~egbird/dict/a.htm
-# gets all words wrapped in <i> tags from page. will only work on urls form above domain.
+# gets all words wrapped in <i> tags from the page. will only work on urls from the islandnet domain.
 
-# currently gets the html for the 'a' page.
+# gets the html for the 'a' page.
 page = urllib.request.urlopen('http://islandnet.com/~egbird/dict/a.htm')
 
 # parses page into BeautifulSoup object
-soup = BeautifulSoup(html_doc, 'html.parser')
+soup = BeautifulSoup(page, 'html.parser')
 
 # finds all strings contained in <i> tags and puts them in ResultSet object
 raw_list = soup.find_all('i')
