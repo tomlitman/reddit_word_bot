@@ -82,7 +82,7 @@ for top_level_comment in submission.comments:
     if 'code' in Words:
 
         for word in Words:
-            reply = reply + (get_def(word))
+            reply += (get_def(word))
 
         top_level_comment.reply(reply)
 
