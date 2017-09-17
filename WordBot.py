@@ -1,3 +1,5 @@
+# pycharm says this isnt in use, but it 100% is. so do not delete.
+import Words
 from pprint import pprint
 import praw
 import requests
@@ -71,6 +73,13 @@ def get_words(comment):
         word = ''.join(ch for ch in word if ch not in exclude)
         comment_words.append(word)
     return comment_words
+
+
+# if word is in relevant list, will return true.
+def word_search(word):
+    # lazily gets the relevant word list from Words.py, by using the first letter in the word.
+    word_list = eval('Words.' + word[:1])
+    return word in word_list
 
 
 for top_level_comment in submission.comments:
