@@ -1,2 +1,4 @@
 .DS_Store
 praw.ini
+.idea/
+__pycache__/
