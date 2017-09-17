@@ -78,21 +78,19 @@ def get_words(comment):
 # if word is in relevant list, will return true.
 def word_search(word):
     # lazily gets the relevant word list from Words.py, by using the first letter in the word.
-    word_list = eval('Words.' + word[:1])
+    word_list = eval('Words.' + str.lower(word[:1]))
     return word in word_list
 
 
 for top_level_comment in submission.comments:
 
-    Words = get_words(top_level_comment.body)
-    reply = ''
+	Comment_Words = get_words(top_level_comment.body)
+	
+	for word in Comment_Words:
 
-    # at the moment I'm singling out specific comments, by words that are specific to the comment
-    if 'code' in Words:
-
-        for word in Words:
-            reply += (get_def(word))
-
-        top_level_comment.reply(reply)
-
-        break
+		if word_search(word) == True:
+			reply = (get_def(word))
+			print(reply)
+			
+			top_level_comment.reply(reply)
+			break
