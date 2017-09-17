@@ -62,26 +62,47 @@ def get_words(comment):
 
 # if word is in relevant list, will return true.
 def word_search(word):
-    # lazily gets the relevant word list from Words.py, by using the first letter in the word.
-    word_list = eval('Words.' + str.lower(word[:1]))
-    return word in word_list
+
+	#Words starting with numbers exits function
+	
+	while True:
+		try:
+			char = int(word[0])
+		except ValueError:
+			break
+			
+		return False
+	
+	# lazily gets the relevant word list from Words.py, by using the first letter in the word.
+	
+	# this skips to the 2nd character of word if it's surrounded by quotation marks " 'be' " was raising an error
+	# this only raises a syntax error from OEDs definition strings, as they somehow don't get stripped
+	
+	try:
+		word_list = eval('Words.' + str.lower(word[0]))
+	except SyntaxError:
+		word_list = eval('Words.' + str.lower(word[1]))
+	
+	return word in word_list
     
 
 def FindAndReply(submission):
 
 	submission.comment_sort = 'new'
 
-	for top_level_comment in submission.comments:
+	submission.comments.replace_more(limit=0)
+	for comment in submission.comments.list():
 
-		Comment_Words = get_words(top_level_comment.body)
-	
+		Comment_Words = get_words(comment.body)
+		
 		for word in Comment_Words:
 
 			if word_search(word) == True:
 				reply = (get_def(word))
 				print(reply)
 			
-				#top_level_comment.reply(reply)
+				#comment.reply(reply)
+				
 				break
     
 
