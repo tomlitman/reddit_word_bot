@@ -6,6 +6,9 @@ import requests
 import json
 import string
 
+#Dictionary containing words in submissions that have already been defined
+submission_dict = {}
+
 reddit = praw.Reddit('word_bot', user_agent='Mac OS:WordBotv0.1 (by /u/J_Dymond)')
 subreddit = reddit.subreddit('AbsolutelyNormal')
 
@@ -88,19 +91,29 @@ def word_search(word):
 
 def FindAndReply(submission):
 
+	print(submission_dict)
+
 	submission.comment_sort = 'new'
 
 	submission.comments.replace_more(limit=0)
 	for comment in submission.comments.list():
+	
+		if comment.author.name == 'word_bot':
+			continue
 
 		Comment_Words = get_words(comment.body)
 		
 		for word in Comment_Words:
-
+			
 			if word_search(word) == True:
+				
+				if word in submission_dict[submission.id]:
+					continue
+				
 				reply = (get_def(word))
 				print(reply)
-			
+				submission_dict[submission.id].append(word)
+				
 				#comment.reply(reply)
 				
 				break
@@ -110,5 +123,9 @@ for submission in subreddit.hot(limit=10):
 
 	 print(submission.title)  # Output: the submission's title
 	 print(submission.id)     # Output: the submission's ID 
+	 
+	 if submission.id not in submission_dict.keys():
+	 	submission_dict.update({submission.id : []})
+
 	 FindAndReply(submission)
 
