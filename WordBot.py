@@ -110,14 +110,44 @@ def FindAndReply(submission):
 				if word in submission_dict[submission.id]:
 					continue
 				
-				reply = (get_def(word))
-				print(reply)
+				definition = (get_def(word))
+				print(definition + '\n\nScore in Scrabble - ' + str(ScrabbleScore(word)))
 				submission_dict[submission.id].append(word)
 				
-				#comment.reply(reply)
+				#comment.reply(definition)
 				
 				break
-    
+				
+def ScrabbleScore(word):
+
+	word = word.lower()
+	score = 0
+	
+	one = ['a', 'b', 'i', 'o', 'u', 'l', 'n', 's', 't', 'r']
+	two = ['d','g']
+	three = ['b','c','m','p']
+	four = ['f', 'h', 'v', 'w', 'y']
+	five = ['k']
+	eight = ['j','x']
+	ten = ['z','q']
+	
+	for letter in range(0,len(word)):
+		if word[letter] in one:
+			score += 1
+		elif word[letter] in two:
+			score += 2
+		elif word[letter] in three:
+			score += 3
+		elif word[letter] in four:
+			score += 4
+		elif word[letter] in five:
+			score += 5
+		elif word[letter] in eight:
+			score += 8
+		elif word[letter] in ten:
+			score += 10
+			
+	return(score)
 
 for submission in subreddit.hot(limit=10):
 
