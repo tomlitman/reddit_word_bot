@@ -111,7 +111,7 @@ def FindAndReply(submission):
 					continue
 				
 				definition = (get_def(word))
-				print(definition + '\n\nScore in Scrabble - ' + str(ScrabbleScore(word)))
+				print(definition + '\nScrabble Score - ' + str(ScrabbleScore(word)))
 				submission_dict[submission.id].append(word)
 				
 				#comment.reply(definition)
